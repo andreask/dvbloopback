@@ -2,9 +2,23 @@ Loopback kernel driver for DVB devices on Linux.
 
 Use:
 
+Clone the default v4l drivers (https://www.linuxtv.org/wiki/index.php/How_to_Obtain,_Build_and_Install_V4L-DVB_Device_Drivers):
+* git clone git://linuxtv.org/media_build.git
+* cd media_build
+* ./build
+
+Then follow the instructions for adding dvbloopback support
+
 NB: minimum supported kernel series is 3.10.x
 
 copy the dvbloopback dir into the drivers/media/pci dir of the kernel or v4l source tree
+
+If the media_build directory and dvbloopback directory are subdirectories of the same directory patching the build settings can be achieved by running:
+patch -p0 < ../dvbloopback/dvbloopback.patch
+
+within the media_build directory.
+
+OR:
 
 Add
 source "drivers/media/pci/dvbloopback/Kconfig"
@@ -14,12 +28,15 @@ Add
 obj-$(CONFIG_DVB_LOOPBACK_ADAPTER) += dvbloopback/
 to drivers/media/pci/Makefile
 
+You have to patch the dvbdev.c file as well:
+
 Patch drivers/media/dvb-core/dvbdev.c the usual way,
 example patches are in this repo.
 
 NB: if you are going to build a kernel v4.5.x or up, you need to patch the dvbloopback module with 4.5-linux.patch (it's in the repo).
 
-Having done this, proceed with make oldconfig, make allyesconfig or something like that.
+After this run the following command:
+make clean && make allyesconfig && make
 
 
 Alternative use:
