@@ -1007,7 +1007,7 @@ static int create_lb_dev(struct dvblb *dvblb, int dev_idx, int type)
 
 // create loopback device (will be frontend0)
 	ret = dvb_register_device(&dvblb->adapter, &lbdev->lb_dev,
-	                    &dvbdev_looped, lbdev, type);
+	                    &dvbdev_looped, lbdev, type, 0);
 	if (ret != 0) {
 		info("error registering device adapter%d",
 		     dvblb->adapter.num);
@@ -1015,7 +1015,7 @@ static int create_lb_dev(struct dvblb *dvblb, int dev_idx, int type)
 	}
 // create userspace device (will be frontend1)
 	ret = dvb_register_device(&dvblb->adapter, &lbdev->user_dev,
-	                    &dvbdev_userspace, lbdev, type);
+	                    &dvbdev_userspace, lbdev, type, 0);
 	if (ret != 0) {
 		info("error registering device adapter%d",
 		     dvblb->adapter.num);
